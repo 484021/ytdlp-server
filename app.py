@@ -52,13 +52,13 @@ def download():
                 else:
                     return jsonify({"error": "Downloaded file not found"}), 500
             
-            # Return file info
-            return jsonify({
-                "title": title,
-                "ext": ext,
-                "file_path": audio_file,
-                "size": os.path.getsize(audio_file)
-            })
+            # Return the audio file directly
+            return send_file(
+                audio_file,
+                mimetype='audio/webm',
+                as_attachment=True,
+                download_name=f'{title}.{ext}',
+            )
             
     except Exception as e:
         logging.error(f"Error: {str(e)}")
